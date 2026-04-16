@@ -1,0 +1,23 @@
+{
+    "version": "2.0.0",
+    "configurations": [
+        {
+            "type": "cortex-debug",
+            "request": "launch",
+            "name": "Debug STM32F4 (OpenOCD)",
+            "servertype": "openocd",
+            "interface": "swd",
+            "cwd": "${workspaceRoot}",
+            "runToEntryPoint": "main",
+            "executable": "${workspaceRoot}/build/app.elf", // Path to you executable file
+            "device": "STM32F411RE",
+            "configFiles": [
+                "board/st_nucleo_f4.cfg"
+            ],
+            "svdFile": "${workspaceRoot}/platform/stm32f411xe/STM32F411.svd", // Path to your svd file
+            "serverpath": "C:/Program Files/xpack-openocd-0.12.0-7/bin/openocd.exe", // Path to your openocd program 
+            "armToolchainPath": "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/14.3 rel1/bin", // Path to the arm gnu toolchain
+            "showDevDebugOutput": "none"
+        }
+    ]
+}
