@@ -1,30 +1,32 @@
-/******************************************************************************
-* Copyright (C) 2026 by Mauricio Vela Chavira - CETYS Universidad
-*****************************************************************************/
+/**
+ * @file led.c
+ * @brief Module that manipulates the led component on the development board.
+ * 
+ * 
+ * For this file to work it only needs to be called on the main.c file
+ *
+ * @authors Mauricio Vela, Steven McClellan
+ * @date 04/16/2026
+ *
+ */
 #include "led.h"
-
-#define RCC_BASE      (0x40023800UL)
-#define GPIOA_BASE    (0x40020000UL)
-
-#define RCC_AHB1ENR   (*(volatile uint32_t *)(RCC_BASE + 0x30UL))
-#define GPIOA_MODER   (*(volatile uint32_t *)(GPIOA_BASE + 0x00UL))
-#define GPIOA_ODR     (*(volatile uint32_t *)(GPIOA_BASE + 0x14UL))
+#include "SRS_GPIO_DRIVER.h"
 
 void led_init(void) {
-    RCC_AHB1ENR |= (1UL << 0);    // Reloj Puerto A
-    GPIOA_MODER |= (1UL << 10);   // Pin 5 como Salida
-    GPIOA_MODER &= ~(1UL << 11);
+    gpio_init();
+    gpio_initPort(A);
+    gpio_setPinMode(A, 5, 1);
 }
 
 void led_on(void) {
-    GPIOA_ODR |= (1UL << 5);
+    gpio_clearPin(A, 5); // LOW == LED ON
 }
 
 void led_off(void) {
-    GPIOA_ODR &= ~(1UL << 5);
+    gpio_setPin(A, 5); // HIGH == LED OFF
 }
 
 void led_toggle(void) {
-    /* Operación XOR para invertir el bit 5 */
-    GPIOA_ODR ^= (1UL << 5);
+    /*XOR Operation to toggle Pin 5 */
+    gpio_togglePin(A, 5);
 }

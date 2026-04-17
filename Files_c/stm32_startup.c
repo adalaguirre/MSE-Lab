@@ -299,7 +299,7 @@ void Default_Handler(void){
 
 void Reset_Handler(void){
     /* Call the clock system initialization function. */
-﻿  SystemInit();
+    SystemInit();
     // Calculate the sizes of the .data and .bss sections
     uint32_t data_mem_size = (uint32_t)&_edata - (uint32_t)&_sdata;
     uint32_t bss_mem_size = (uint32_t)&_ebss - (uint32_t)&_sbss;

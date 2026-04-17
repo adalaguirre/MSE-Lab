@@ -1,23 +1,28 @@
-/******************************************************************************
-* Copyright (C) 2026 by Mauricio Vela Chavira - CETYS Universidad
-*****************************************************************************/
+/**
+ * @file button.c
+ * @brief Module that manipulates the push bottom component on the development board.
+ * 
+ * 
+ * For this file to work it only needs to be called on the main.c file
+ *
+ * @authors Mauricio Vela, Steven McClellan
+ * @date 04/16/2026
+ *
+ */
 #include "button.h"
+#include "SRS_GPIO_DRIVER.h"
 
-#define RCC_BASE      (0x40023800UL)
-#define GPIOC_BASE    (0x40020800UL)
-
-#define RCC_AHB1ENR   (*(volatile uint32_t *)(RCC_BASE + 0x30UL))
-#define GPIOC_MODER   (*(volatile uint32_t *)(GPIOC_BASE + 0x00UL))
-#define GPIOC_IDR     (*(volatile uint32_t *)(GPIOC_BASE + 0x10UL))
-
+// This function initializes the GPIO, Pin and mode that the push button is located
 void button_init(void) {
-    RCC_AHB1ENR |= (1UL << 2);    // Reloj Puerto C
-    GPIOC_MODER &= ~(3UL << 26);  // Pin 13 como Entrada
+    gpio_init();                   // Initialize GPIO subsystem
+    gpio_initPort(C);             // Initialize clocking in C port  
+    gpio_setPinMode(C, 13, 0);    // Set pin 13 as input
 }
 
+// This function reads the state in which the push button currently is
 button_state_t button_get_state(void) {
-    if (GPIOC_IDR & (1UL << 13)) {
-        return BUTTON_RELEASED;
+    if (gpio_readPin(C, 13)) {    // Depending in the current bit value of Pin 13 this if condition will return 
+        return BUTTON_RELEASED;   // the current condition of the Button which is or isn't pressed
     } else {
         return BUTTON_PRESSED;
     }

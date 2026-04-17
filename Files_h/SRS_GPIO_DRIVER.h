@@ -1,6 +1,21 @@
-#include <stdint.h>
+/**
+ * @file SRS_GPIO_DRIVER.h
+ * @brief Module that manipulates the components that the 
+ * development board may use.
+ * 
+ * The user may use multiple functions to indicate the development board
+ * which component it will use.
+ *
+ * @author Steven McClellan
+ * @date 04/15/2026
+ *
+ */
+/*** INCLUDES ***/
 
-/* Declaring and defining enum for ease of access from other files*/
+#include <stdint.h>
+#include "stm32f4xx.h"
+
+/* Declaring enum for ease of access from other files*/
 typedef enum port{
     A,
     B,
@@ -11,16 +26,19 @@ typedef enum port{
     SIZE
 }port_g;
 
+/* Declaring universal array and size of array for GPIO addresses*/
+extern GPIO_TypeDef* GPIO_arr[SIZE];
+
 // Declaring all functions
 
 /* This register will initialize all GPIO ports in it's default state */
 void gpio_init();
 
 /* This function shall enable clocking for a specified GPIO port */
-uint32_t gpio_initPort(GPIO_TypeDef* GPIO_in);
+uint32_t gpio_initPort(port_g port);
 
 /* This function allows the configuration of pin direction and mode */
-uint32_t setPinMode(port_g port, uint8_t pin);
+uint32_t gpio_setPinMode(port_g port, uint8_t pin, uint8_t mode);
 
 /* This function will set a specified pin into a HIGH value state */
 uint32_t gpio_setPin(port_g port, uint8_t pin);
