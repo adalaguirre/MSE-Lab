@@ -17,7 +17,7 @@
 
 /*** DEFINES ***/
 #define TIM_SR_UIF (1U << 0) // Variable for better readability
-
+#define TIM_CLK     10000000U
 // Declaring universal array for TIM addresses
 TIM_TypeDef* TIM_ar[SIZE];
 
@@ -35,16 +35,9 @@ void tim_init(void){
 
 // Internal fucntion to decide which value of timer will be used
 static uint32_t tim_getClock(tim_g tim){
-
-    if (tim == tim1 || tim == tim9 || tim == tim10 || tim == tim11){
-        return 100000000; // APB2 timers
-    } 
-    else if (tim == tim2 || tim == tim3 || tim == tim4 || tim == tim5){
-        return 50000000;  // APB1 timers
-    }
-
-    return 0; // fallback (error)
-}  
+    (void)tim;
+    return TIM_CLK;
+}
 
 
 /* This function shall enable clocking for a specified GPIO port */
@@ -179,7 +172,7 @@ uint32_t tim_waitTimer(tim_g tim){
     if (!(TIM_ar[tim]->CR1 & (1U << 0))) return 1;
 
     // Timeout variable to avoid deadlocks
-    uint32_t timeout = 1000000;
+    uint32_t timeout = 10000000;
 
     // While loop that waits until the timer overflows
     while (!(TIM_ar[tim]->SR & TIM_SR_UIF)){
@@ -255,6 +248,10 @@ uint32_t tim_setTimerCompareMode(tim_g tim, uint8_t channel, uint8_t mode){
     }
 
     preload_shift = shift - 1;
+
+    // Forcing CCMR to OUPUT mode
+    *ccmr &= ~(3U << (shift - 2)); // CCxS = 00
+
     // Clear previous mode
     *ccmr &= ~(7U << shift);
 
