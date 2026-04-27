@@ -63,7 +63,7 @@ uint32_t pwm_init(uint32_t freq_hz)
      * the output compare preload (OC1PE) so CCR changes take effect
      * at the start of the next period, not mid-cycle.
      */
-    if (tim_setTimerCompareChannelMode(PWM_TIMER, PWM_CHANNEL, PWM_MODE_1) != 0) return 1;
+    if (tim_setTimerCompareMode(PWM_TIMER, PWM_CHANNEL, PWM_MODE_1) != 0) return 1;
 
     /* ── Step 5: Set initial duty cycle to 0% (CCR1 = 0) ── */
     if (tim_setTimerCompareChannelValue(PWM_TIMER, PWM_CHANNEL, 0) != 0) return 1;
