@@ -218,7 +218,7 @@ uint32_t tim_setTimerCompareChannelValue(tim_g tim, uint8_t channel, uint32_t va
     return 0;
 }
 
-uint32_t tim_setTimerCompareMode(tim_g tim, uint8_t channel, uint8_t mode){
+uint32_t tim_setTimerCompareChannelMode(tim_g tim, uint8_t channel, uint8_t mode){
 
     // If the input tim is out of the valid range the function fails 
     if (tim >= SIZE) return 1;
