@@ -141,21 +141,9 @@ uint32_t tim_setTimerFreq(tim_g tim, uint32_t freq){
     return 0;
 }
 
+
+
 uint32_t tim_enableTimer(tim_g tim){
-    if (tim >= SIZE) return 1;
-
-    // Reset counter
-    TIM_ar[tim]->CNT = 0;
-
-    // Force update to load PSC and ARR
-    TIM_ar[tim]->EGR |= (1U << 0);
-
-    // Enable counter
-    TIM_ar[tim]->CR1 |= (1U << 0);
-
-    return 0;
-    
-}uint32_t tim_enableTimer(tim_g tim){
     if (tim >= SIZE) return 1;
 
     // Reset counter
