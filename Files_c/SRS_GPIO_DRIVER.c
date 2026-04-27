@@ -121,21 +121,27 @@ uint32_t gpio_readPin(port_g port, uint8_t pin){
 
 }
 
-uint32_t gpio_setAlternateFunction(port_g port, uint8_t pin){
+uint32_t gpio_setAlternateFunction(port_g port, uint8_t pin, uint8_t af){
     
     // If the input port is out of the valid range the function fails
-    if(port >= SIZE) return 1; // Invalid port return
+    if(port >= SIZE) return 1;
+    // If the input pin is out of the valid range the function fails
+    if(pin > 15) return 1;
+    // If the input af is out of the valid range the function fails
+    if(af > 15) return 1;
 
-    if(pin > 15) return 1;             // Invalid pin return
+    // Set MODER to AF
+    GPIO_arr[port]->MODER &= ~(3 << (pin*2));
+    GPIO_arr[port]->MODER |= (2 << (pin*2));
 
-    // Clear the bits within the MODER
-    GPIO_arr[port]->MODER &= ~(3<<(pin*2));
-    // The operation pin*2 allows to find which real pin is being used
-    // The operation 3<< shifts to the correct position on the register of the desired pin 
-
-    // Sets the desired mode on the MODER
-    GPIO_arr[port]->MODER |= (2 <<(pin*2));
+    // Select AFR register
+    if(pin < 8){
+        GPIO_arr[port]->AFR[0] &= ~(0xF << (pin*4));
+        GPIO_arr[port]->AFR[0] |= (af << (pin*4));
+    } else {
+        GPIO_arr[port]->AFR[1] &= ~(0xF << ((pin-8)*4));
+        GPIO_arr[port]->AFR[1] |= (af << ((pin-8)*4));
+    }
 
     return 0;
-
 }

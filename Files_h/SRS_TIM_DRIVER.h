@@ -62,4 +62,3 @@ uint32_t tim_setTimerCompareChannelMode(tim_g port, uint8_t channel, uint8_t mod
 uint32_t tim_enableTimerTimerCompareChannel(tim_g tim, uint8_t channel);
 
 uint32_t tim_disableTimerTimerCompareChannel(tim_g tim, uint8_t channel);
-

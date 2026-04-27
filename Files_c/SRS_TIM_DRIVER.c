@@ -200,6 +200,11 @@ uint32_t tim_setTimerCompareChannelValue(tim_g tim, uint8_t channel, uint32_t va
     // If the input channel us out of the valid range the function fails
     if (channel < 1 || channel > 4) return 1;
 
+    // Timer channel limitations
+    if ((tim == tim10 || tim == tim11) && channel != 1) return 1;
+    if (tim == tim9 && channel > 2) return 1;
+
+
     // If condition that checks for 16-bit limit
     if ((value > 0xFFFF) && (tim != tim2 && tim != tim5)) return 1;
 
@@ -223,6 +228,10 @@ uint32_t tim_setTimerCompareMode(tim_g tim, uint8_t channel, uint8_t mode){
     // If the input mode us out of the valid range the function fails
     if (mode > 7) return 1;
 
+    // Timer channel limitations
+    if ((tim == tim10 || tim == tim11) && channel != 1) return 1;
+    if (tim == tim9 && channel > 2) return 1;
+
     // Volatile variable that points to the address of each channel 
     volatile uint32_t *ccmr;
     uint8_t shift;
@@ -231,24 +240,21 @@ uint32_t tim_setTimerCompareMode(tim_g tim, uint8_t channel, uint8_t mode){
     if (channel == 1){
         ccmr = &TIM_ar[tim]->CCMR1;
         shift = 4;
-        preload_shift = shift - 1;
     }
     else if (channel == 2){
         ccmr = &TIM_ar[tim]->CCMR1;
         shift = 12;
-        preload_shift = shift - 1;
     }
     else if (channel == 3){
         ccmr = &TIM_ar[tim]->CCMR2;
         shift = 4;
-        preload_shift = shift - 1;
     }
     else { // channel 4
         ccmr = &TIM_ar[tim]->CCMR2;
         shift = 12;
-        preload_shift = shift - 1;
     }
 
+    preload_shift = shift - 1;
     // Clear previous mode
     *ccmr &= ~(7U << shift);
 
@@ -268,6 +274,11 @@ uint32_t tim_enableTimerCompareChannel(tim_g tim, uint8_t channel){
     // If the input channel us out of the valid range the function fails
     if (channel < 1 || channel > 4) return 1;
 
+    // Timer channel limitations
+    if ((tim == tim10 || tim == tim11) && channel != 1) return 1;
+    if (tim == tim9 && channel > 2) return 1;
+
+
     // Calculate bit position for CCxE
     uint8_t bit = (channel - 1) * 4;
 
@@ -283,6 +294,10 @@ uint32_t tim_disableTimerCompareChannel(tim_g tim, uint8_t channel){
     if (tim >= SIZE) return 1;
     // If the input channel us out of the valid range the function fails
     if (channel < 1 || channel > 4) return 1;
+
+    // Timer channel limitations
+    if ((tim == tim10 || tim == tim11) && channel != 1) return 1;
+    if (tim == tim9 && channel > 2) return 1;
 
     // Calculate bit position for CCxE
     uint8_t bit = (channel - 1) * 4;
