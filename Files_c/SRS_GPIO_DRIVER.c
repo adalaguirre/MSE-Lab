@@ -15,7 +15,7 @@
 #include "stm32f4xx.h"
 #include "SRS_GPIO_DRIVER.h"
 
-GPIO_TypeDef* GPIO_arr[SIZE];
+GPIO_TypeDef* GPIO_arr[GPIO_PORT_MAX];
 
 /* This register will initialize all GPIO ports in it's default state*/
 void gpio_init(void){
@@ -33,7 +33,7 @@ void gpio_init(void){
 uint32_t gpio_initPort(port_g port){
     
     // If the input port is out of the valid range the function fails
-    if(port >= SIZE) return 1; // Invalid port return
+    if(port >= GPIO_PORT_MAX) return 1; // Invalid port return
 
     gpio_init(); // Initializes GPIO_arr contents
 
@@ -54,7 +54,7 @@ uint32_t gpio_initPort(port_g port){
 uint32_t gpio_setPinMode(port_g port, uint8_t pin, uint8_t mode){
 
     // If the input port is out of the valid range the function fails
-    if(port >= SIZE) return 1; // Invalid port return
+    if(port >= GPIO_PORT_MAX) return 1; // Invalid port return
 
     // If the input mode is not valid the function fails
     if(mode > 3) return 1; // Invalid mode return
@@ -78,7 +78,7 @@ uint32_t gpio_setPinMode(port_g port, uint8_t pin, uint8_t mode){
 uint32_t gpio_setPin(port_g port, uint8_t pin){
    
     // If the input port is out of the valid range the function fails
-    if(port >= SIZE) return 1; // Invalid port return
+    if(port >= GPIO_PORT_MAX) return 1; // Invalid port return
 
     if(pin > 15) return 1;             // Invalid pin return
 
@@ -89,7 +89,7 @@ uint32_t gpio_setPin(port_g port, uint8_t pin){
 /* This function will set a specified pin into a LOW value state*/
 uint32_t gpio_clearPin(port_g port, uint8_t pin){
     // If the input port is out of the valid range the function fails
-    if(port >= SIZE) return 1; // Invalid port return
+    if(port >= GPIO_PORT_MAX) return 1; // Invalid port return
 
     if(pin > 15) return 1;             // Invalid pin return
 
@@ -100,7 +100,7 @@ uint32_t gpio_clearPin(port_g port, uint8_t pin){
 /* This function will set a specified pin into it's reversed value state*/
 uint32_t gpio_togglePin(port_g port, uint8_t pin){
     // If the input port is out of the valid range the function fails
-   if(port >= SIZE) return 1; // Invalid port return
+   if(port >= GPIO_PORT_MAX) return 1; // Invalid port return
 
     if(pin > 15) return 1;             // Invalid pin return
 
@@ -111,7 +111,7 @@ uint32_t gpio_togglePin(port_g port, uint8_t pin){
 /* This fucntion will retrieve a specified pin value state */
 uint32_t gpio_readPin(port_g port, uint8_t pin){
 // If the input port is out of the valid range the function fails
-    if(port >= SIZE) return 1; // Invalid port return
+    if(port >= GPIO_PORT_MAX) return 1; // Invalid port return
 
     if(pin > 15) return 1;             // Invalid pin return
 
@@ -124,7 +124,7 @@ uint32_t gpio_readPin(port_g port, uint8_t pin){
 uint32_t gpio_setAlternateFunction(port_g port, uint8_t pin, uint8_t af){
     
     // If the input port is out of the valid range the function fails
-    if(port >= SIZE) return 1;
+    if(port >= GPIO_PORT_MAX) return 1;
     // If the input pin is out of the valid range the function fails
     if(pin > 15) return 1;
     // If the input af is out of the valid range the function fails
