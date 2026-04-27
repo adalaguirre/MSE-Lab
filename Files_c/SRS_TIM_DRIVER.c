@@ -34,16 +34,14 @@ void tim_init(void){
 
 // Internal fucntion to decide which value of timer will be used
 static uint32_t tim_getClock(tim_g tim){
-
     if (tim == tim1 || tim == tim9 || tim == tim10 || tim == tim11){
-        return 100000000; // APB2 timers
+        return 16000000; // APB2 timers — HSI default 16MHz
     } 
     else if (tim == tim2 || tim == tim3 || tim == tim4 || tim == tim5){
-        return 50000000;  // APB1 timers
+        return 16000000; // APB1 timers — HSI default 16MHz
     }
-
-    return 0; // fallback (error)
-}  
+    return 0;
+}
 
 
 /* This function shall enable clocking for a specified GPIO port */
@@ -178,7 +176,7 @@ uint32_t tim_waitTimer(tim_g tim){
     if (!(TIM_ar[tim]->CR1 & (1U << 0))) return 1;
 
     // Timeout variable to avoid deadlocks
-    uint32_t timeout = 1000000;
+    uint32_t timeout = 50000000;
 
     // While loop that waits until the timer overflows
     while (!(TIM_ar[tim]->SR & TIM_SR_UIF)){
