@@ -15,8 +15,7 @@
 #include "stm32f4xx.h"
 #include "SRS_TIM_DRIVER.h"
 
-/*** DEFINES ***/
-#define TIM_SR_UIF (1U << 0) // Variable for better readability
+
 
 // Declaring universal array for TIM addresses
 TIM_TypeDef* TIM_ar[SIZE];
