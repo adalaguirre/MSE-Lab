@@ -154,6 +154,17 @@ uint32_t tim_enableTimer(tim_g tim){
     TIM_ar[tim]->CR1 |= (1U << 0);
 
     return 0;
+    
+}uint32_t tim_enableTimer(tim_g tim){
+    if (tim >= SIZE) return 1;
+
+    // Reset counter
+    TIM_ar[tim]->CNT = 0;
+
+    // Enable counter
+    TIM_ar[tim]->CR1 |= (1U << 0);
+
+    return 0;
 }
 
 uint32_t tim_disableTimer(tim_g tim){
