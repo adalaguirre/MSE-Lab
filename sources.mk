@@ -7,10 +7,13 @@ INCLUDE_DIR = Files_h
 SRCS = \
 	$(SRC_DIR)/main.c \
 	$(SRC_DIR)/stm32_startup.c \
-	$(SRC_DIR)/button.c \
 	$(SRC_DIR)/led.c \
+	$(SRC_DIR)/timer.c \
+	$(SRC_DIR)/pwm.c \
 	$(SRC_DIR)/SRS_GPIO_DRIVER.c \
+	$(SRC_DIR)/SRS_TIM_DRIVER.c \
 	$(SRC_DIR)/system_stm32f4xx.c
+
 # List all your include directories here
 INCLUDES = \
 	-I$(INCLUDE_DIR) \
