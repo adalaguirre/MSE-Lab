@@ -11,6 +11,9 @@
  *
  */
 /*** INCLUDES ***/
+#ifndef __SRS_TIM_DRIVER_H__
+#define __SRS_TIM_DRIVER_H__
+
 
 #include <stdint.h>
 #include "stm32f4xx.h"
@@ -59,6 +62,7 @@ uint32_t tim_setTimerCompareChannelValue(tim_g port, uint8_t channel, uint32_t v
 
 uint32_t tim_setTimerCompareChannelMode(tim_g port, uint8_t channel, uint8_t mode);
 
-uint32_t tim_enableTimerTimerCompareChannel(tim_g tim, uint8_t channel);
+uint32_t tim_enableTimerCompareChannel(tim_g tim, uint8_t channel);
 
-uint32_t tim_disableTimerTimerCompareChannel(tim_g tim, uint8_t channel);
+uint32_t tim_disableTimerCompareChannel(tim_g tim, uint8_t channel);
+#endif /* __SRS_TIM_DRIVER_H__ */

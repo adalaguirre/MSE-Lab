@@ -11,6 +11,9 @@
  *
  */
 /*** INCLUDES ***/
+#ifndef __SRS_GPIO_DRIVER_H__
+#define __SRS_GPIO_DRIVER_H__
+
 
 #include <stdint.h>
 #include "stm32f4xx.h"
@@ -23,11 +26,11 @@ typedef enum port{
     D,
     E,
     H,
-    SIZE
+    GPIO_PORT_MAX
 }port_g;
 
 /* Declaring universal array and size of array for GPIO addresses*/
-extern GPIO_TypeDef* GPIO_arr[SIZE];
+extern GPIO_TypeDef* GPIO_arr[GPIO_PORT_MAX];
 
 // Declaring all functions
 
@@ -53,4 +56,5 @@ uint32_t gpio_togglePin(port_g port, uint8_t pin);
 uint32_t gpio_readPin(port_g port, uint8_t pin);
 
 
-uint32_t gpio_setAlternateFunction(port_g port, uint8_t pin);
+uint32_t gpio_setAlternateFunction(port_g port, uint8_t pin, uint8_t af);
+#endif /* __SRS_GPIO_DRIVER_H__ */
