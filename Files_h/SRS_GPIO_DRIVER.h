@@ -35,7 +35,7 @@ extern GPIO_TypeDef* GPIO_arr[GPIO_PORT_MAX];
 // Declaring all functions
 
 /* This register will initialize all GPIO ports in it's default state */
-void gpio_init();
+void gpio_init(void);
 
 /* This function shall enable clocking for a specified GPIO port */
 uint32_t gpio_initPort(port_g port);
